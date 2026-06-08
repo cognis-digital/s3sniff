@@ -1,0 +1,10 @@
+{
+  "name": "@cognis/s3sniff",
+  "version": "0.2.0",
+  "description": "JavaScript port of s3sniff (Cognis Neural Suite)",
+  "bin": {
+    "s3sniff": "index.js"
+  },
+  "license": "LicenseRef-COCL-1.0",
+  "type": "module"
+}
