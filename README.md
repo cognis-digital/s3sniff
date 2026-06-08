@@ -36,8 +36,11 @@ open-bucket triage
 <a name="features"></a>
 ## Features
 
-- ✅ Scan
-- ✅ To Json
+- ✅ Analyze Acl
+- ✅ Analyze Policy
+- ✅ Analyze Listing
+- ✅ Analyze Document
+- ✅ Summarize
 - ✅ Runs on Linux/macOS/Windows · Docker · devcontainer
 - ✅ Ports in Python, JavaScript, Go, and Rust (`ports/`)
 
