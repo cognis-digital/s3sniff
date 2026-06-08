@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: s3sniff, labels: { app: s3sniff } }
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: s3sniff } }
+  template:
+    metadata: { labels: { app: s3sniff } }
+    spec:
+      containers:
+        - name: s3sniff
+          image: ghcr.io/cognis-digital/s3sniff:latest
+          ports: [{ containerPort: 8000 }]
+          resources:
+            requests: { cpu: "50m", memory: "64Mi" }
+            limits: { cpu: "500m", memory: "256Mi" }
+---
+apiVersion: v1
+kind: Service
+metadata: { name: s3sniff }
+spec:
+  selector: { app: s3sniff }
+  ports: [{ port: 80, targetPort: 8000 }]
