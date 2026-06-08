@@ -1,0 +1,52 @@
+[
+  {
+    "bucket": "acme-public-assets",
+    "acl": {
+      "Owner": {"DisplayName": "acme", "ID": "abc123"},
+      "Grants": [
+        {
+          "Grantee": {"Type": "Group", "URI": "http://acs.amazonaws.com/groups/global/AllUsers"},
+          "Permission": "READ"
+        }
+      ]
+    },
+    "policy": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Sid": "PublicReadGetObject",
+          "Effect": "Allow",
+          "Principal": "*",
+          "Action": "s3:GetObject",
+          "Resource": "arn:aws:s3:::acme-public-assets/*"
+        },
+        {
+          "Sid": "AnyoneCanUpload",
+          "Effect": "Allow",
+          "Principal": "*",
+          "Action": ["s3:PutObject"],
+          "Resource": "arn:aws:s3:::acme-public-assets/*"
+        }
+      ]
+    }
+  },
+  {
+    "bucket": "acme-internal-backups",
+    "acl": {
+      "Owner": {"DisplayName": "acme", "ID": "abc123"},
+      "Grants": [
+        {
+          "Grantee": {"Type": "Group", "URI": "http://acs.amazonaws.com/groups/global/AllUsers"},
+          "Permission": "READ"
+        }
+      ]
+    },
+    "listing": {
+      "public": true,
+      "objects": [
+        {"key": "db-backup.sql", "size": 84211234},
+        {"key": "logo.png", "size": 20481}
+      ]
+    }
+  }
+]
