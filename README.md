@@ -20,6 +20,32 @@ pip install cognis-s3sniff
 s3sniff scan .            # → prioritized findings in seconds
 ```
 
+## Usage — step by step
+
+`s3sniff` performs defensive triage of cloud-bucket ACLs, policies, and listings — detection only, with no network access or mutation. Console script: `s3sniff`.
+
+1. **Install**:
+   ```bash
+   pipx install s3sniff     # or: pip install s3sniff
+   ```
+2. **Scan a triage JSON document** (a single object, or a list of them, each carrying `bucket` / `acl` / `policy` / `listing` keys):
+   ```bash
+   s3sniff scan buckets.json
+   ```
+   Exit `2` = findings present (severity-gated), `0` = clean, `1` = error.
+3. **Read from stdin** and emit JSON for piping into other tooling:
+   ```bash
+   cat buckets.json | s3sniff scan - --format json | jq '.summary.highest_severity'
+   ```
+4. **Set the severity gate** so only serious exposure fails the run:
+   ```bash
+   s3sniff scan buckets.json --fail-on HIGH
+   ```
+5. **Wire it into CI / a guardrail** — block public-bucket configs before they apply:
+   ```bash
+   s3sniff scan buckets.json --fail-on HIGH || echo "risky bucket ACL/policy detected — blocking"
+   ```
+
 ## Contents
 
 - [Why s3sniff?](#why) · [Features](#features) · [Quick start](#quick-start) · [Example](#example) · [Architecture](#architecture) · [AI stack](#ai-stack) · [How it compares](#how-it-compares) · [Integrations](#integrations) · [Install anywhere](#install-anywhere) · [Related](#related) · [Contributing](#contributing)
